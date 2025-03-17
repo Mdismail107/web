@@ -1,0 +1,173 @@
+/* Background & Main Layout */
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #000000, #008000, #00ced1);
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Wrapper for Profile and Form Side-by-Side */
+  .profile-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+  }
+  
+  /* Profile Settings Label */
+
+  
+  /* Container Styling */
+  .signup-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 700px;
+    width: 100%;
+  }
+  
+  /* Form Grid Layout */
+  form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  /* Group Styling */
+  .input-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-group label {
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  
+  .input-group input,
+  .input-group select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  /* Email Validation Icon */
+  .input-group i {
+    margin-top: 5px;
+    font-size: 1rem;
+  }
+  
+  /* Full Width for Last Row Inputs */
+  .input-group#password-group,
+  .input-group:last-of-type {
+    grid-column: span 2;
+  }
+  
+  /* Button Styling */
+  .button-group {
+    grid-column: span 2;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .edit-button {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .edit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .save-button {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .save-button:hover {
+    background-color: #1e7e34;
+  }
+  
+  .save-button a,
+  .edit-button a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  /* Login Link */
+  .login-link {
+    grid-column: span 2;
+    text-align: center;
+    margin-top: 15px;
+  }
+  
+  .login-link a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .profile-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        padding: 40px;
+        background: linear-gradient(to right, #000000, #008000, #00ced1);
+        min-height: 100vh;
+        flex-wrap: wrap; /* Helps responsiveness */
+      }
+      
+      .profile-settings-label i {
+        font-size: 28px;
+        color: #ffffff;
+        transform: rotate(45deg);
+      }
+  
+    form {
+      grid-template-columns: 1fr;
+    }
+  
+    .button-group,
+    .login-link {
+      grid-column: span 1;
+    }
+  }
+  .profile-settings-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .profile-settings-label i {
+    font-size: 28px;
+    color: #ffffff;
+  }
+    
