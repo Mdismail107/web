@@ -1,4 +1,3 @@
-/* Background & Main Layout */
 body {
     margin: 0;
     padding: 0;
@@ -10,35 +9,60 @@ body {
     align-items: center;
   }
   
-  /* Wrapper for Profile and Form Side-by-Side */
   .profile-wrapper {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-  }
-  
-  /* Profile Settings Label */
-
-  
-  /* Container Styling */
-  .signup-container {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
     background-color: #fff;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    max-width: 700px;
-    width: 100%;
+    max-width: 900px;
+    width: 1270px;
+    margin-left: 220px;
+
   }
   
-  /* Form Grid Layout */
-  form {
+  .profile-pic-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 150px;
+    flex-shrink: 0;
+  }
+  
+  .profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .upload-hint {
+    font-size: 0.85rem;
+    color: black;
+    margin-top: 5px;
+    text-align: center;
+  }
+  
+  .homepage-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .homepage-container form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+    width: 100%;
   }
   
-  /* Group Styling */
   .input-group {
     display: flex;
     flex-direction: column;
@@ -56,19 +80,6 @@ body {
     border-radius: 6px;
   }
   
-  /* Email Validation Icon */
-  .input-group i {
-    margin-top: 5px;
-    font-size: 1rem;
-  }
-  
-  /* Full Width for Last Row Inputs */
-  .input-group#password-group,
-  .input-group:last-of-type {
-    grid-column: span 2;
-  }
-  
-  /* Button Styling */
   .button-group {
     grid-column: span 2;
     display: flex;
@@ -102,13 +113,6 @@ body {
     background-color: #1e7e34;
   }
   
-  .save-button a,
-  .edit-button a {
-    color: white;
-    text-decoration: none;
-  }
-  
-  /* Login Link */
   .login-link {
     grid-column: span 2;
     text-align: center;
@@ -123,51 +127,3 @@ body {
   .login-link a:hover {
     text-decoration: underline;
   }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .profile-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 40px;
-        padding: 40px;
-        background: linear-gradient(to right, #000000, #008000, #00ced1);
-        min-height: 100vh;
-        flex-wrap: wrap; /* Helps responsiveness */
-      }
-      
-      .profile-settings-label i {
-        font-size: 28px;
-        color: #ffffff;
-        transform: rotate(45deg);
-      }
-  
-    form {
-      grid-template-columns: 1fr;
-    }
-  
-    .button-group,
-    .login-link {
-      grid-column: span 1;
-    }
-  }
-  .profile-settings-label {
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    font-size: 20px;
-    font-weight: bold;
-    color: #ffffff;
-    text-align: center;
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-  .profile-settings-label i {
-    font-size: 28px;
-    color: #ffffff;
-  }
-    
