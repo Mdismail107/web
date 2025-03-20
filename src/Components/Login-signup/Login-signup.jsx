@@ -28,7 +28,7 @@ const LoginSignup = () => {
     // Simple validation (you can enhance this)
     if (emailValid === true) {
       // Redirect to Home page after successful login
-      navigate('/home'); // Use the navigate function to go to the next page
+      navigate('/Sidebar'); // Use the navigate function to go to the next page
     } else {
       // Handle invalid login (optional)
       alert('Please enter a valid email');
@@ -59,7 +59,7 @@ const LoginSignup = () => {
           <label htmlFor="password">Password</label>
           <input type="password" id="create-password" name="create-password" required />
         </div>
-        <button type="submit" className="login-button"><a href='./Home'>Login</a></button>
+        <button type="submit" className="login-button"><a href='./Sidebar'>Login</a></button>
       </form>
       <p className="login-link">Don't have an account? <a href="./Register">Signup</a></p>
       <div className="social-signup">
