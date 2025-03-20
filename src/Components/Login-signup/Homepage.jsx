@@ -1,41 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Homepage.css';
 
 const ProfilePage = () => {
-  const [firstName, setFirstName] = useState('John');
-  const [middleName, setMiddleName] = useState('Michael');
-  const [lastName, setLastName] = useState('Doe');
-  const [email, setEmail] = useState('john.doe@example.com');
-  const [phone, setPhone] = useState('123-456-7890');
-  const [gender, setGender] = useState('male');
-  const [password, setPassword] = useState('password123');
+  const [profileData, setProfileData] = useState({
+    firstName: 'John',
+    middleName: 'Michael',
+    lastName: 'Doe',
+    email: 'john.doe@example.com',
+    phone: '123-456-7890',
+    gender: 'male',
+    password: 'password123',
+  });
+
   const [isEditing, setIsEditing] = useState(false);
   const [emailValid, setEmailValid] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
+  const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
+
+  useEffect(() => {
+    const checkSidebar = () => {
+      const sidebar = document.querySelector('.sidebar');
+      setIsSidebarMinimized(sidebar?.classList.contains('minimized') || false);
+    };
+
+    checkSidebar();
+    const observer = new MutationObserver(checkSidebar);
+    const sidebarElement = document.querySelector('.sidebar');
+    if (sidebarElement) {
+      observer.observe(sidebarElement, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleProfileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setProfilePic(URL.createObjectURL(file));
-    }
+    if (file) setProfilePic(URL.createObjectURL(file));
   };
 
-  const handleEmailChange = (e) => {
-    const emailValue = e.target.value;
-    setEmail(emailValue);
-    const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-    if (emailValue === "") {
-      setEmailValid(null);
-    } else if (emailValue.match(pattern)) {
-      setEmailValid(true);
-    } else {
-      setEmailValid(false);
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setProfileData(prev => ({ ...prev, [id]: value }));
+
+    if (id === 'email') {
+      const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      setEmailValid(value === '' ? null : pattern.test(value));
     }
   };
 
   const handleSaveChanges = (e) => {
     e.preventDefault();
-    if (emailValid === true) {
+    if (emailValid || profileData.email === '') {
       alert('Profile updated successfully!');
       setIsEditing(false);
     } else {
@@ -43,19 +58,22 @@ const ProfilePage = () => {
     }
   };
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
-
   return (
-    <div className="profile-wrapper">
+    <div
+      className="profile-wrapper"
+      style={{
+        marginLeft: isSidebarMinimized ? '80px' : '270px',
+        transition: 'margin-left 0.3s ease',
+      }}
+    >
       <div className="profile-pic-container">
         <label htmlFor="profile-upload">
-          <img
-            src={profilePic || require('../Assets/profile.png')}
+        <img
+            src={profilePic|| require('../Assets/profile.png')}
             alt="Profile"
             className="profile-pic"
           />
+
         </label>
         <input
           type="file"
@@ -70,64 +88,28 @@ const ProfilePage = () => {
       <div className="homepage-container">
         <h2>Profile</h2>
         <form onSubmit={handleSaveChanges}>
-          <div className="input-group">
-            <label htmlFor="first-name">First Name</label>
-            <input
-              type="text"
-              id="first-name"
-              name="first-name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              disabled={!isEditing}
-            />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="middle-name">Middle Name</label>
-            <input
-              type="text"
-              id="middle-name"
-              name="middle-name"
-              value={middleName}
-              onChange={(e) => setMiddleName(e.target.value)}
-              disabled={!isEditing}
-            />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="last-name">Last Name</label>
-            <input
-              type="text"
-              id="last-name"
-              name="last-name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              disabled={!isEditing}
-            />
-          </div>
+          {['firstName', 'middleName', 'lastName', 'phone', 'password'].map((field) => (
+            <div className="input-group" key={field}>
+              <label htmlFor={field}>{field.replace(/([A-Z])/, ' $1').replace(/^./, str => str.toUpperCase())}</label>
+              <input
+                type={field === 'password' ? 'password' : 'text'}
+                id={field}
+                value={profileData[field]}
+                onChange={handleInputChange}
+                disabled={!isEditing}
+              />
+            </div>
+          ))}
 
           <div className="input-group">
             <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
-              name="email"
-              value={email}
-              onChange={handleEmailChange}
+              value={profileData.email}
+              onChange={handleInputChange}
               disabled={!isEditing}
               required
-            />
-          </div>
-
-          <div className="input-group">
-            <label htmlFor="phone">Phone Number</label>
-            <input
-              type="text"
-              id="phone"
-              name="phone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              disabled={!isEditing}
             />
           </div>
 
@@ -135,9 +117,8 @@ const ProfilePage = () => {
             <label htmlFor="gender">Gender</label>
             <select
               id="gender"
-              name="gender"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
+              value={profileData.gender}
+              onChange={handleInputChange}
               disabled={!isEditing}
             >
               <option value="male">Male</option>
@@ -146,33 +127,18 @@ const ProfilePage = () => {
             </select>
           </div>
 
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              disabled={!isEditing}
-              required
-            />
-          </div>
-
           <div className="button-group">
             {isEditing ? (
-              <button type="submit" className="save-button">
-                <a href="./sidebar.jsx">Save</a>
-              </button>
+              <button type="submit" className="save-button">Save</button>
             ) : (
-              <button type="button" className="edit-button" onClick={handleEditClick}>
-                Edit
-              </button>
+              <button type="button" className="edit-button" onClick={() => setIsEditing(true)}>Edit</button>
             )}
           </div>
         </form>
 
-        <p className="login-link">Want to go back to login? <a href="./Login">Login</a></p>
+        <p className="login-link">
+          Want to go back to login? <a href="./Login">Login</a>
+        </p>
       </div>
     </div>
   );
